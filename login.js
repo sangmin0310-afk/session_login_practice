@@ -52,13 +52,21 @@ function renderLoginForm() {
 loginButton.onclick = () => {
   login()
     .then(() => getUserInfo())
-    .then((res) => renderUserInfo(res.data));
+    .then((res) => renderUserInfo(res.data))
+    .catch((error) => {
+      console.error("로그인 실패:", error);
+      alert("로그인 실패. 아이디와 비밀번호를 확인하세요.");
+    });
 };
 
 // 로그아웃 버튼을 클릭하는 경우
 logoutButton.onclick = () => {
-  logout().then((res) => {
-    console.log(res);
-    renderLoginForm();
-  });
+  logout()
+    .then(() => {
+      renderLoginForm();
+    })
+    .catch((error) => {
+      console.error("로그아웃 실패:", error);
+      alert("로그아웃 실패. 서버와의 연결을 확인하세요.");
+    });
 };
